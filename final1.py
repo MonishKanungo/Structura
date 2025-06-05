@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import asyncio
 import json
 import base64
@@ -21,9 +22,12 @@ from langchain_community.agent_toolkits import create_sql_agent
 import getpass
 from prompts import EXTRACT_HEADERS_PROMPT, EXTRACT_DATA_PROMPT, EXTRACT_METADATA_PROMPT
 
-# Set API keys
-os.environ["LLAMA_CLOUD_API_KEY"] = "llx-9MejFpMZfAtqPWBGhQK5DtE5e3QxyQI4BmdUDNelC1I1m7ET"
-GEMINI_API_KEY = "AIzaSyCWpfn1lUYQ8mLevT3vqiSiaM1erUbb4f0"  # Replace with your actual Gemini API key
+# Load environment variables from .env file
+load_dotenv()
+
+# Set API keys from environment
+LLAMA_CLOUD_API_KEY = os.environ.get("LLAMA_CLOUD_API_KEY")
+GEMINI_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 # Configure Gemini API
 genai.configure(api_key=GEMINI_API_KEY)
