@@ -21,9 +21,9 @@ Table Extraction AI Suite is an end-to-end, AI-powered platform for extracting, 
 > Oil & Gas Spec Sheets: Translates pressure and flow rate tables (e.g., bar ↔ psi, m³/h ↔ GPM) from equipment manuals for accurate selection and compliance.
 
 # **How It Works**
-> Upload: Users upload images or PDFs via the React app.
+> Upload: Users upload images or PDFs.
 
-> Extraction: The backend uses Gemini LLM and LlamaParse to extract tables, headers, and metadata.
+> Extraction: The backend uses Gemini LLM and LlamaParse to extract tables.
 
 > Classification: Each table is embedded and indexed for semantic search using a transformer model.
 
