@@ -1,0 +1,19 @@
+{
+  "title": "Table on page 1",
+  "description": "",
+  "topic_keywords": [
+    "unit conversion",
+    "conversion factors",
+    "measurement",
+    "metric system",
+    "imperial system",
+    "scientific units"
+  ],
+  "data_domain": "physics",
+  "source_page": 1,
+  "original_headers": [
+    "To convert from",
+    "to",
+    "multiply by"
+  ]
+}

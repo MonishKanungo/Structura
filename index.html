@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structura - Industrial Table Q&A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .typing-indicator span {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .table-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .table-container table {
+            min-width: 100%;
+        }
+        .table-container::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .message-enter {
+            animation: messageEnter 0.3s ease-out;
+        }
+        @keyframes messageEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="flex flex-col h-screen">
+        <!-- Header -->
+        <header class="bg-indigo-800 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-indigo-600 p-2 rounded-lg">
+                        <i class="fas fa-table fa-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold">Structura</h1>
+                    <span class="bg-green-500 text-xs px-2 py-1 rounded-full ml-2">Industrial Q&A</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- <button class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-upload mr-2"></i> Import Data
+                    </button> -->
+                    <button class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-cog mr-2"></i> Settings
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 container mx-auto px-4 py-6 flex flex-col md:flex-row gap-6">
+            <!-- Sidebar -->
+            <aside class="w-full md:w-64 bg-white rounded-lg shadow-md p-4 flex-shrink-0">
+                <div class="mb-6">
+                    <h2 class="font-semibold text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-database mr-2 text-indigo-600"></i> Data Sources
+                    </h2>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+                            <span class="text-sm">Production_2023.xlsx</span>
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+                            <span class="text-sm">Inventory_Q2.csv</span>
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                        <div class="flex items-center justify-between bg-gray-100 p-2 rounded">
+                            <span class="text-sm">Supplier_Data.db</span>
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                    </div>
+                    <button class="mt-3 w-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 text-sm py-1 rounded flex items-center justify-center">
+                        <i class="fas fa-plus mr-1"></i> Add Source
+                    </button>
+                </div>
+
+                <div class="mb-6">
+                    
+                </div>
+
+                <div>
+                   
+                </div>
+            </aside>
+
+            <!-- Chat Area -->
+            <div class="flex-1 flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+                <!-- Chat Header -->
+                <div class="bg-indigo-700 text-white p-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-industry mr-2"></i>
+                        <h2 class="font-semibold">Industrial Table Analysis</h2>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="p-1 hover:bg-indigo-600 rounded-full">
+                            <i class="fas fa-table"></i>
+                        </button>
+                        <button class="p-1 hover:bg-indigo-600 rounded-full">
+                            <i class="fas fa-chart-pie"></i>
+                        </button>
+                        <button class="p-1 hover:bg-indigo-600 rounded-full">
+                            <i class="fas fa-file-export"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div id="messages" class="flex-1 p-4 overflow-y-auto bg-gray-50 space-y-4">
+                    <!-- Welcome Message -->
+                    <div class="message-enter flex">
+                        <div class="bg-indigo-100 rounded-lg p-4 max-w-3xl">
+                            <div class="flex items-center mb-2">
+                                <div class="bg-indigo-600 text-white p-1 rounded-full mr-2">
+                                    <i class="fas fa-robot text-xs"></i>
+                                </div>
+                                <span class="font-semibold text-indigo-800">Structura</span>
+                            </div>
+                            <p class="text-gray-800">Hello! I'm Structura, your industrial data analysis assistant. I can help you:</p>
+                            <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-700">
+                                <li>Query and analyze your industrial tables</li>
+                                <li>Identify trends and anomalies in production data</li>
+                                <!-- <li>Generate visualizations from your datasets</li> -->
+                                <li>Answer complex questions about your industrial data</li>
+                            </ul>
+                            <div class="mt-3 pt-3 border-t border-indigo-200">
+                                <p class="text-sm text-gray-600">Try asking something like:</p>
+                                <div class="text-sm bg-indigo-50 rounded p-2 mt-1 text-indigo-700">
+                                    "What's the average defect rate per production line last quarter?"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                            
+                            <div class="mt-3 flex space-x-2">
+                                <!-- <button class="text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700">
+                                    <i class="fas fa-chart-bar mr-1"></i> Visualize
+                                </button>
+                                <button class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">
+                                    <i class="fas fa-download mr-1"></i> Export
+                                </button>
+                                <button class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">
+                                    <i class="fas fa-code mr-1"></i> Show SQL
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="border-t border-gray-200 p-4 bg-white">
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 text-gray-500 hover:text-indigo-600">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="p-2 text-gray-500 hover:text-indigo-600">
+                            <i class="fas fa-table"></i>
+                        </button>
+                        <div class="flex-1 relative">
+                            <textarea id="messageInput" rows="1" placeholder="Ask Structura about your industrial data..." class="w-full border border-gray-300 rounded-lg pl-4 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"></textarea>
+                            <button class="absolute right-2 bottom-2 text-gray-500 hover:text-indigo-600">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                        </div>
+                        <button id="sendButton" class="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500 flex items-center">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        <span>Structura can analyze complex industrial tables.</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const messagesContainer = document.getElementById('messages');
+            
+            // Auto-resize textarea
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // Send message function
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message === '') return;
+                
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message-enter flex justify-end';
+                userMessage.innerHTML = `
+                    <div class="bg-indigo-600 text-white rounded-lg p-4 max-w-3xl">
+                        <div class="font-semibold mb-2">You</div>
+                        <p>${message}</p>
+                    </div>
+                `;
+                messagesContainer.appendChild(userMessage);
+                
+                // Clear input
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message-enter flex';
+                typingIndicator.innerHTML = `
+                    <div class="bg-indigo-100 rounded-lg p-4 max-w-xs">
+                        <div class="typing-indicator flex space-x-1">
+                            <span class="h-2 w-2 bg-indigo-600 rounded-full"></span>
+                            <span class="h-2 w-2 bg-indigo-600 rounded-full"></span>
+                            <span class="h-2 w-2 bg-indigo-600 rounded-full"></span>
+                        </div>
+                    </div>
+                `;
+                messagesContainer.appendChild(typingIndicator);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Simulate response after delay
+                setTimeout(() => {
+                    // Remove typing indicator
+                    messagesContainer.removeChild(typingIndicator);
+                    
+                    // Add bot response (simplified for demo)
+                    const botResponse = document.createElement('div');
+                    botResponse.className = 'message-enter flex';
+                    
+                    // Simple response for demo - in a real app this would be dynamic
+                    if (message.toLowerCase().includes('downtime')) {
+                        botResponse.innerHTML = `
+                            <div class="bg-indigo-100 rounded-lg p-4 max-w-3xl">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-indigo-600 text-white p-1 rounded-full mr-2">
+                                        <i class="fas fa-robot text-xs"></i>
+                                    </div>
+                                    <span class="font-semibold text-indigo-800">Structura</span>
+                                </div>
+                                <p class="text-gray-800">Based on the production data from the last 90 days, here's the downtime analysis:</p>
+                                <div class="mt-3 bg-white rounded border border-gray-200 shadow-sm p-3">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium">Average Downtime:</span>
+                                        <span class="font-semibold">4.7 hours/day</span>
+                                    </div>
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium">Most Affected Line:</span>
+                                        <span class="font-semibold">Line B (28% of total downtime)</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm font-medium">Primary Causes:</span>
+                                        <span class="font-semibold">Maintenance (42%), Material Shortage (33%)</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700">
+                                        <i class="fas fa-chart-line mr-1"></i> Trend Chart
+                                    </button>
+                                    <button class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">
+                                        <i class="fas fa-table mr-1"></i> Full Data
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    } else if (message.toLowerCase().includes('supplier') || message.toLowerCase().includes('vendor')) {
+                        botResponse.innerHTML = `
+                            <div class="bg-indigo-100 rounded-lg p-4 max-w-3xl">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-indigo-600 text-white p-1 rounded-full mr-2">
+                                        <i class="fas fa-robot text-xs"></i>
+                                    </div>
+                                    <span class="font-semibold text-indigo-800">Structura</span>
+                                </div>
+                                <p class="text-gray-800 mb-3">Here's the supplier performance analysis from the procurement database:</p>
+                                
+                                <div class="table-container bg-white rounded border border-gray-200 shadow-sm">
+                                    <table class="w-full text-sm">
+                                        <thead class="bg-gray-100">
+                                            <tr>
+                                                <th class="p-2 text-left border-b">Supplier</th>
+                                                <th class="p-2 text-left border-b">On-Time %</th>
+                                                <th class="p-2 text-left border-b">Quality Pass %</th>
+                                                <th class="p-2 text-left border-b">Avg. Lead Time</th>
+                                                <th class="p-2 text-left border-b">Rating</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="p-2">SteelTech Inc.</td>
+                                                <td class="p-2">98.2%</td>
+                                                <td class="p-2">99.1%</td>
+                                                <td class="p-2">3.2 days</td>
+                                                <td class="p-2">
+                                                    <div class="flex text-yellow-400">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star-half-alt"></i>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="border-b hover:bg-gray-50">
+                                                <td class="p-2">BoltMaster</td>
+                                                <td class="p-2">95.7%</td>
+                                                <td class="p-2">97.3%</td>
+                                                <td class="p-2">4.1 days</td>
+                                                <td class="p-2">
+                                                    <div class="flex text-yellow-400">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="p-2">FluidSystems</td>
+                                                <td class="p-2">89.4%</td>
+                                                <td class="p-2">94.2%</td>
+                                                <td class="p-2">5.8 days</td>
+                                                <td class="p-2">
+                                                    <div class="flex text-yellow-400">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                        <i class="far fa-star"></i>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700">
+                                        <i class="fas fa-chart-pie mr-1"></i> Breakdown
+                                    </button>
+                                    <button class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">
+                                        <i class="fas fa-file-csv mr-1"></i> Export
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Default response
+                        botResponse.innerHTML = `
+                            <div class="bg-indigo-100 rounded-lg p-4 max-w-3xl">
+                                <div class="flex items-center mb-2">
+                                    <div class="bg-indigo-600 text-white p-1 rounded-full mr-2">
+                                        <i class="fas fa-robot text-xs"></i>
+                                    </div>
+                                    <span class="font-semibold text-indigo-800">Structura</span>
+                                </div>
+                                <p class="text-gray-800">I've analyzed your query about "${message}". Here's what I found:</p>
+                                <div class="mt-3 bg-white rounded border border-gray-200 shadow-sm p-3">
+                                    <ul class="list-disc pl-5 space-y-1 text-sm">
+                                        <li>The data suggests a 12% improvement in production efficiency over the last quarter</li>
+                                        <li>Line 3 shows the highest variance in output quality (σ=2.4)</li>
+                                        <li>Material waste is 3.2% below industry average</li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3 text-sm text-gray-600">
+                                    For more specific insights, try asking about particular metrics like defect rates, machine utilization, or supply chain metrics.
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    messagesContainer.appendChild(botResponse);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1500);
+            }
+            
+            // Send message on button click
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key (but allow Shift+Enter for new lines)
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
