@@ -34,5 +34,11 @@ Table Extraction AI Suite is an end-to-end, AI-powered platform for extracting, 
 # **Inspiration**
 This project is inspired by the need for seamless, AI-driven data extraction and analytics from complex, real-world documents—empowering everyone to unlock insights from their data.
 
+
+https://github.com/user-attachments/assets/47b023f7-0d2f-4023-99a1-b57b0b8bf327
+
+
 If you’d like any changes or want to emphasize specific features, let me know!
+
+
 
